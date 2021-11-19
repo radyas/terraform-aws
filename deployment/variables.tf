@@ -45,3 +45,8 @@ variable "aws_access_key" {
 variable "aws_secret_key" {
     type = string
 }
+
+variable "security_group_name" {
+    type = string
+    default = "security-group-01"
+}
