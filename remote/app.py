@@ -1,8 +1,9 @@
 import os
 import requests
 
-url = os.environ.get('SERVER_URL') + ':5000'
 
+url = "http://" + os.environ.get('SERVER_URL') + ':5000'
+print(url)
 tags_response = requests.get(url + '/tags')
 assert tags_response.status_code == 200
 
