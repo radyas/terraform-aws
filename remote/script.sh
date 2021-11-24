@@ -1,5 +1,5 @@
 #!/bin/sh
-ssh -T -i private.pem ec2-user@"$1" << 'EOL'
+ssh -T -o StrictHostKeyChecking=no -i private.pem ec2-user@"$1" << 'EOL'
     sudo yum update
     sudo yum install -y git
     git clone -b dev https://github.com/radyas/terraform-aws.git
