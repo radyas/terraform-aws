@@ -65,14 +65,16 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve "plan"
 
+    - name: Output server url
+      run: |
+        echo "SERVER_URL=$(terraform output server_url)" >> $GITHUB_ENV
+
     - name: executing remote ssh commands
       working-directory: remote
       run: |
-        SERVER_URL=$(terraform output server_url)
         echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
-        ssh -T -o StrictHostKeyChecking=no -i private.pem ec2-user@${SERVER_URL} 'ls -al'
-#        chmod u+r+x private.pem
-#        ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
+        chmod u+r+x private.pem
+        ./script.sh ${{ env.SERVER_URL }} $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
 
     - name: Terraform Cleanup
       if: ${{ always() }}
