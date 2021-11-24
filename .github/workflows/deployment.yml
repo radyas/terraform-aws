@@ -76,8 +76,11 @@ jobs:
         chmod u+r+x private.pem
         ./script.sh ${{ env.SERVER_URL }} ${{ env.TF_VAR_aws_access_key }} ${{ env.TF_VAR_aws_secret_key }}
 
+    - name: run validation
+      working-directory: remote
+      run: python3 app.py
+
     - name: Terraform Cleanup
-      if: ${{ always() }}
       run: |
         terraform plan -var-file="dev.tfvars" -destroy -out="plan"
         terraform apply "plan"
