@@ -70,8 +70,9 @@ jobs:
       run: |
         SERVER_URL=$(terraform output server_url)
         echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
-        chmod u+r+x private.pem
-        ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
+        ssh -T -o StrictHostKeyChecking=no -i private.pem ec2-user@${SERVER_URL} 'ls -al'
+#        chmod u+r+x private.pem
+#        ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
 
     - name: Terraform Cleanup
       if: ${{ always() }}
