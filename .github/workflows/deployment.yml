@@ -70,9 +70,10 @@ jobs:
         SERVER_URL=$(terraform output server_url)
 
     - name: executing remote ssh commands
+      working-directory: remote
       run: |
-        cd ../remote
         echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
+        ls -al
         chmod +x private.pem
         ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
 
