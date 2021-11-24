@@ -68,25 +68,13 @@ jobs:
     - name: Output server url
       run: |
         SERVER_URL=$(terraform output server_url)
-        echo "::set-output name=HOST::$SERVER_URL"
-      id: url
 
-    # - name: executing remote ssh commands
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ steps.url.outputs.HOST }}
-    #     username: ${{ env.USER }}
-    #     key: ${{ secrets.AWS_PRIVATE_KEY }}
-    #     port: ${{ env.PORT }}
-    #     script: |
-    #       sudo apt update
-    #       sudo apt install git
-    #       git clone -b dev https://github.com/radyas/terraform-aws.git
-    #       cd terraform-aws/api
-    #       ls -al
-    #       pip3 install -r requirements.txt
-    #       bash
-    #       flask run --host 0.0.0.0
+    - name: executing remote ssh commands
+      run: |
+        cd remote
+        echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
+        chmod +x private.pem
+        ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
 
     - name: Terraform Cleanup
       if: ${{ always() }}
