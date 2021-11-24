@@ -74,10 +74,10 @@ jobs:
       run: |
         echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
         chmod u+r+x private.pem
-        ./script.sh ${{ env.SERVER_URL }} $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
+        ./script.sh ${{ env.SERVER_URL }} ${{ env.TF_VAR_aws_access_key }} ${{ env.TF_VAR_aws_secret_key }}
 
     - name: Terraform Cleanup
-#      if: ${{ always() }}
+      if: ${{ always() }}
       run: |
         terraform plan -var-file="dev.tfvars" -destroy -out="plan"
         terraform apply "plan"

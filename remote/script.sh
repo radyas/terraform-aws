@@ -9,5 +9,5 @@ ssh -T -o StrictHostKeyChecking=no -i private.pem ec2-user@"$1" << 'EOL'
     cd terraform-aws/api
     pip3 install -r requirements.txt
     bash
-    flask run --host 0.0.0.0
+    gunicorn app:app --bind 0.0.0.0:5000 --daemon
 EOL
