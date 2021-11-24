@@ -71,8 +71,7 @@ jobs:
 
     - name: executing remote ssh commands
       run: |
-        ls -al
-        cd remote
+        cd ../remote
         echo "$PRIVATE_KEY" > private.pem && chmod 600 private.pem
         chmod +x private.pem
         ./script.sh $SERVER_URL $TF_VAR_aws_access_key $TF_VAR_aws_secret_key
