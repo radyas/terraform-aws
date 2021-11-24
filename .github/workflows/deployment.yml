@@ -1,7 +1,8 @@
 name: 'Terraform Test Deployment'
 
 on:
-  push: [dev]
+  push:
+    branches: [dev]
 
 env:
   TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
