@@ -7,7 +7,7 @@ on:
 env:
   TF_VAR_aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
   TF_VAR_aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-  USER: ec2-user
+  PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
   PORT: 22
 
 jobs:
